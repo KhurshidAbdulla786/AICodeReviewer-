@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ai-code-reviewer-db
+    environment:
+      POSTGRES_DB: ai_code_reviewer
+      POSTGRES_USER: aicode
+      POSTGRES_PASSWORD: aicode_secret_2024
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/src/main/resources/db/migration/V1__initial_schema.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ai-code-reviewer-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aicode -d ai_code_reviewer"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai-code-reviewer-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ai_code_reviewer
+      SPRING_DATASOURCE_USERNAME: aicode
+      SPRING_DATASOURCE_PASSWORD: aicode_secret_2024
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      APP_JWT_SECRET: ${JWT_SECRET:-dGVzdC1zZWNyZXQta2V5LWZvci1haS1jb2RlLXJldmlld2VyLWFwcGxpY2F0aW9uLTIwMjQ=}
+      SPRING_AI_OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      SPRING_AI_OPENAI_CHAT_MODEL: gpt-4
+    ports:
+      - "8080:8080"
+    networks:
+      - ai-code-reviewer-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ai-code-reviewer-ui
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:8080/api/v1
+    ports:
+      - "5173:80"
+    networks:
+      - ai-code-reviewer-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  ai-code-reviewer-network:
+    driver: bridge
