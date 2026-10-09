@@ -11,7 +11,7 @@ A production-ready, full-stack AI-powered code review application built with **J
 | Project Setup | Monorepo scaffolding & Docker orchestration | ✅ |
 | Backend Core | Spring Boot server, PostgreSQL models (User, Project) | ✅ |
 | Authentication | JWT auth, email verification, Google OAuth, protected routes | ✅ |
-| Code Analyzer | Source file upload, AI-powered analysis, scoring | ⬜ |
+| Code Analyzer | Source file upload, AI-powered analysis, scoring | ✅ |
 | AI Integration | OpenAI/Gemini integration via Spring AI | ⬜ |
 | Review Matching | Code complexity & bug detection matching | ⬜ |
 | Suggestions & Fixes | Code refactoring & personalized improvement roadmaps | ⬜ |
