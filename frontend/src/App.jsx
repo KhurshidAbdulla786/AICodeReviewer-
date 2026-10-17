@@ -9,6 +9,7 @@ import Editor from './pages/Editor';
 import ReviewHistory from './pages/ReviewHistory';
 import AiChat from './pages/AiChat';
 import Profile from './pages/Profile';
+import Landing from './pages/Landing';
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -49,6 +50,7 @@ function App() {
           }}
         />
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
           <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
@@ -57,8 +59,7 @@ function App() {
           <Route path="/history" element={<PrivateRoute><ReviewHistory /></PrivateRoute>} />
           <Route path="/ai-chat" element={<PrivateRoute><AiChat /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-          <Route path="/" element={<Navigate to="/dashboard" />} />
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
