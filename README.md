@@ -13,7 +13,7 @@ A production-ready, full-stack AI-powered code review application built with **J
 | Authentication | JWT auth, email verification, Google OAuth, protected routes | ✅ |
 | Code Analyzer | Source file upload, AI-powered analysis, scoring | ✅ |
 | AI Integration | OpenAI/Gemini integration via Spring AI | ✅ |
-| Review Matching | Complexity scoring and bug analysis; historical matching pending | 🟡 Partial |
+| Review Matching | Complexity scoring, bug analysis, severity grouping, historical bug-pattern matching, recurring-issue summary | ✅ |
 | Suggestions & Fixes | Code refactoring & personalized improvement roadmaps | ⬜ |
 | AI Code Chat | RAG-based AI assistant for code modifications | ⬜ |
 | Code Simulator | Review simulator with interactive AI feedback | ⬜ |
@@ -166,7 +166,7 @@ users
 | 🤖 AI Review | Code quality, SOLID, security, performance scoring |
 | 🐛 Bug Detection | AI review findings persisted with severity, location, and recommendations |
 | 📈 Complexity | Cyclomatic complexity metrics and weighted complexity score utility |
-| 🔗 Review Matching | Interface defined; severity grouping and historical bug-pattern matching pending |
+| 🔗 Review Matching | Complexity scoring, bug analysis, severity grouping, historical bug-pattern matching, recurring-issue summary |
 | 💬 AI Chat | Natural language code Q&A |
 | 📜 History | Persistent review history & comparison |
 
